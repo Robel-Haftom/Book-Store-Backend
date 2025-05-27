@@ -1,0 +1,14 @@
+{
+  "bookPublisher": "Mega books",
+  "bookPublicationDate": "2000-12-10",
+  "stockQuantity": 100,
+  "bookLanguage": "Amharic",
+  "bookPrice": 325,
+  "pageNumber": 150,
+  "bookEdition": 15,
+  "bookAuthor": "Alemayehu Wassie",
+  "categoryId": 2,
+  "bookTitle": "Almotkum",
+  "bookFormat": "Paperback",
+  "bookDescription": "this is a great book by someone who is intended to deliver this message for the reader around the world"
+}
