@@ -14,7 +14,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "bookmarks")
+@Table(name = "bookmarks",
+    uniqueConstraints = @UniqueConstraint(
+            columnNames = {"user_id", "book_id"}
+    )
+)
 public class Bookmark {
 
     @Id

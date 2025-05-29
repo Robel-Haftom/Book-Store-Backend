@@ -1,5 +1,6 @@
 package com.robel.bookstore.mapper;
 
+import com.robel.bookstore.dto.BookmarkCreateDTO;
 import com.robel.bookstore.dto.BookmarkResponseDTO;
 import com.robel.bookstore.entity.Bookmark;
 

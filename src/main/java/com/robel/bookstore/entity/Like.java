@@ -13,7 +13,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "likes")
+@Table(name = "likes",
+uniqueConstraints = @UniqueConstraint(
+        columnNames = {"user_id", "book_id"}
+))
 public class Like {
 
     @Id

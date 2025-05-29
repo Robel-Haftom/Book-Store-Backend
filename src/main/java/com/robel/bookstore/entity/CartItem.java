@@ -17,7 +17,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "cart_items")
+@Table(name = "cart_items", uniqueConstraints = @UniqueConstraint(
+        columnNames = {"cart_id", "book_id"}
+))
 public class CartItem {
 
     @Id

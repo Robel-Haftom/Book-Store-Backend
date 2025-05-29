@@ -116,5 +116,29 @@ public class GlobalExceptionHandler{
                 Map.of("error", exception.getMessage())
         );
     }
+    @ExceptionHandler(BookmarkNotFoundException.class)
+    public ResponseEntity<Map<String, String>> bookmarkNotFoundExceptionHandler(BookmarkNotFoundException exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                Map.of("error", exception.getMessage())
+        );
+    }
+    @ExceptionHandler(BookmarkExistException.class)
+    public ResponseEntity<Map<String, String>> bookmarkExistExceptionHandler(BookmarkExistException exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                Map.of("error", exception.getMessage())
+        );
+    }
+    @ExceptionHandler(LikeExistException.class)
+    public ResponseEntity<Map<String, String>> likeExistExceptionHandler(LikeExistException exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                Map.of("error", exception.getMessage())
+        );
+    }
+    @ExceptionHandler(LikeNotFoundException.class)
+    public ResponseEntity<Map<String, String>> LikeNotFoundException(LikeNotFoundException exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                Map.of("error", exception.getMessage())
+        );
+    }
 
 }
