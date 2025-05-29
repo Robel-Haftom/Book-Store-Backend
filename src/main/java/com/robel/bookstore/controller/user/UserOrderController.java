@@ -20,8 +20,6 @@ public class UserOrderController {
     @Autowired
     private OrderServices orderServices;
 
-
-    @PreAuthorize("hasRole('USER')")
     @PostMapping()
     public ResponseEntity<OrderResponseDTO> createOrder(@RequestBody Map<String, Long> body){
         Long cartId = body.get("cartId");

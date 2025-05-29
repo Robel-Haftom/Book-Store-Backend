@@ -69,7 +69,6 @@ public class UserController {
         return ResponseEntity.ok().body("Profile picture changed successfully : " + imgUrl);
     }
 
-    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/images/delete/{userId}")
     public ResponseEntity<String> deleteProfilePicture(@PathVariable("userId") Long userId) throws IOException {
         fileService.deleteProfilePicture(profilePath, userId);

@@ -27,7 +27,7 @@ public class Review {
     private Integer rating;
 
     @NotBlank
-    @Lob
+    @Size(max = 2000)
     @Column(columnDefinition = "TEXT")
     private String comment;
 

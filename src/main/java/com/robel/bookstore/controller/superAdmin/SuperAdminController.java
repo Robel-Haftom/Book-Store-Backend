@@ -20,32 +20,27 @@ public class SuperAdminController {
     @Autowired
     private UserServices userServices;
 
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PostMapping()
     public ResponseEntity<UserResponseDTO> register(@Validated(OnCreate.class) @RequestBody UserCreateDTO userCreateDTO){
         return ResponseEntity.ok().body(userServices.createAdmin(userCreateDTO));
     }
 
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @GetMapping("{userId}")
     public ResponseEntity<UserResponseDTO> getUser(@PathVariable("userId") Long userId){
         return ResponseEntity.ok().body(userServices.getUserById(userId));
     }
 
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @GetMapping()
     public ResponseEntity<List<UserResponseDTO>> getAllUsers(){
         return ResponseEntity.ok().body(userServices.getAllUsers());
     }
 
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PutMapping("{userId}")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable("userId") Long userId,
                                                       @Validated (OnUpdate.class) @RequestBody UserCreateDTO userCreateDTO){
         return ResponseEntity.ok().body(userServices.updateUser(userId, userCreateDTO));
     }
 
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @DeleteMapping("{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable("userId") Long userId){
         userServices.deleteUser(userId);

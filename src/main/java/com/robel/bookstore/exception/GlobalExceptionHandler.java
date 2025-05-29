@@ -140,5 +140,11 @@ public class GlobalExceptionHandler{
                 Map.of("error", exception.getMessage())
         );
     }
+    @ExceptionHandler(ReviewNotFoundException.class)
+    public ResponseEntity<Map<String, String>> reviewNotFoundExceptionHandler(ReviewNotFoundException exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                Map.of("error", exception.getMessage())
+        );
+    }
 
 }

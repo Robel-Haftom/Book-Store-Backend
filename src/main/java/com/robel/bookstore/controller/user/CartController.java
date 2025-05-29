@@ -13,7 +13,6 @@ public class CartController {
     @Autowired
     private CartServices cartServices;
 
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("{userId}")
     public ResponseEntity<CartResponseDTO> getCartByUserId(@PathVariable("userId") Long userId){
         return ResponseEntity.ok().body(cartServices.getCartByUserId(userId));

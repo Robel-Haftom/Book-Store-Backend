@@ -18,13 +18,11 @@ public class CartItemController {
     @Autowired
     private CartItemServices cartItemServices;
 
-    @PreAuthorize("hasRole('USER')")
     @PostMapping()
     public ResponseEntity<CartItemResponseDTO> addCartItem(@Valid @RequestBody CartItemCreateDTO cartItemCreateDTO){
         return ResponseEntity.ok().body(cartItemServices.addCartItem(cartItemCreateDTO));
     }
 
-    @PreAuthorize("hasRole('USER')")
     @PutMapping("{cartItemId}")
     public ResponseEntity<CartItemResponseDTO> updateCartItem(@PathVariable("cartItemId") Long cartItemId,
                                                               @RequestBody Map<String, Integer> body){
@@ -32,7 +30,6 @@ public class CartItemController {
         return ResponseEntity.ok().body(cartItemServices.updateCartItem(cartItemId, quantity));
     }
 
-    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("{cartItemId}")
     public ResponseEntity<String> deleteCartItem(@PathVariable("cartItemId") Long cartItemId){
         cartItemServices.deleteCartItem(cartItemId);
