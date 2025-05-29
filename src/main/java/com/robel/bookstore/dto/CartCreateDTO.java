@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CartCreateDTO {
-    @NotNull
+    @NotNull(message = "Book ID cannot be null")
     Long userId;
 }

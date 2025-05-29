@@ -17,6 +17,7 @@ import com.robel.bookstore.security.CustomUserDetailService;
 import com.robel.bookstore.service.UserServices;
 import com.robel.bookstore.security.JwtUtilityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -50,6 +51,9 @@ public class UserServicesImpl implements UserServices {
     @Autowired
     private CustomUserDetailService customUserDetailService;
 
+    @Value("${base.url.users}")
+    String profileBaseUrl;
+
     @Override
     public UserResponseDTO createUser(UserCreateDTO userCreateDTO) {
         userRepository.findByUserName(userCreateDTO.getUserName())
@@ -77,6 +81,11 @@ public class UserServicesImpl implements UserServices {
         user.setRole(UserRole.USER);
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
+        user.setEnabled(true);
+        user.setAccountNonLocked(true);
+        user.setAccountNonExpired(true);
+        user.setCredentialsNonExpired(true);
+        user.setProfileImgUrl(profileBaseUrl + "newuser/" + "user.png");
 
         User savedUser = userRepository.save(user);
 
@@ -108,10 +117,27 @@ public class UserServicesImpl implements UserServices {
         admin.setRole(UserRole.ADMIN);
         admin.setCreatedAt(LocalDateTime.now());
         admin.setUpdatedAt(LocalDateTime.now());
+        admin.setEnabled(true);
+        admin.setAccountNonLocked(true);
+        admin.setAccountNonExpired(true);
+        admin.setCredentialsNonExpired(true);
+        admin.setProfileImgUrl(profileBaseUrl + "newuser/" + "user.png");
+
+        //creating cart for the admin if he is changed to user role he can use it
+        Cart cart = Cart.builder()
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .totalPrice((double)0)
+                .build();
 
         User savedAdmin = userRepository.save(admin);
+        cart.setUser(savedAdmin);
+        Cart savedCart = cartRepository.save(cart);
 
-        return UserMapper.mapToUserResponseDTO(savedAdmin);
+        savedAdmin.setCart(savedCart);
+        User adminWithCart = userRepository.save(savedAdmin);
+
+        return UserMapper.mapToUserResponseDTO(adminWithCart);
     }
 
     @Override

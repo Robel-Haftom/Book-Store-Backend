@@ -70,6 +70,18 @@ public class User {
 
     private LocalDateTime lastLogin;
 
+    @NotNull
+    private boolean enabled;
+
+    @NotNull
+    private boolean accountNonExpired;
+
+    @NotNull
+    private boolean accountNonLocked;
+
+    @NotNull
+    private boolean credentialsNonExpired;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

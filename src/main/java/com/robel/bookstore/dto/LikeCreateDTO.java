@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class LikeCreateDTO {
 
-    @NotNull
+    @NotNull(message = "User ID cannot be null")
     private Long userId;
 
-    @NotNull
+    @NotNull(message = "Book ID cannot be null")
     private Long bookId;
 }

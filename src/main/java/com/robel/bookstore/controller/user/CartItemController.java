@@ -1,4 +1,4 @@
-package com.robel.bookstore.controller;
+package com.robel.bookstore.controller.user;
 
 import com.robel.bookstore.dto.CartItemCreateDTO;
 import com.robel.bookstore.dto.CartItemResponseDTO;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/cartItems")
+@RequestMapping("/api/v1/users/cartItems")
 public class CartItemController {
 
     @Autowired

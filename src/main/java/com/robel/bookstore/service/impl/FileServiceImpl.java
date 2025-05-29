@@ -1,6 +1,10 @@
 package com.robel.bookstore.service.impl;
 
+import com.robel.bookstore.entity.User;
+import com.robel.bookstore.repository.UserRepository;
 import com.robel.bookstore.service.FileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,30 +21,43 @@ import java.util.List;
 @Service
 public class FileServiceImpl implements FileService {
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Value("${base.url.users}")
+    String baseUrl;
+
     @Override
-    public String uploadProfileImage(MultipartFile file, String filePath, String userName) throws IOException {
+    public String uploadProfileImage(MultipartFile file, String filePath, Long userId) throws IOException {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         String newFileName = LocalDateTime.now().format(formatter) + file.getOriginalFilename();
-        String imgFilePath = filePath + userName.toLowerCase() + File.separator + newFileName;
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        String imgFilePath = filePath + user.getUserName().toLowerCase() + File.separator + newFileName;
 
-        File img = new File(filePath + File.separator + userName.toLowerCase());
+        File img = new File(filePath + File.separator + user.getUserName().toLowerCase());
         if(!img.exists()){
             img.mkdirs();
         }
 
         Files.copy(file.getInputStream(), Paths.get(imgFilePath), StandardCopyOption.REPLACE_EXISTING);
+        String profileImgUrl =  baseUrl + user.getUserName().toLowerCase() + "/" + newFileName;
+        user.setProfileImgUrl(profileImgUrl);
+        userRepository.save(user);
 
-        return newFileName;
+        return profileImgUrl;
     }
 
     @Override
-    public String changeProfileImage(MultipartFile file, String filePath, String userName) throws IOException {
+    public String changeProfileImage(MultipartFile file, String filePath, Long userId) throws IOException {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         //first delete the existing file or files
-        Path dirPath = Paths.get((filePath + File.separator + userName.toLowerCase()));
+        Path dirPath = Paths.get((filePath + File.separator + user.getUserName().toLowerCase()));
         List<File> files = new ArrayList<>();
         File directory = new File(dirPath.toString());
 
@@ -60,16 +77,22 @@ public class FileServiceImpl implements FileService {
         }
 
         String newFileName = LocalDateTime.now().format(formatter) + file.getOriginalFilename();
-        String imgFilePath = filePath + userName.toLowerCase() + File.separator + newFileName;
+        String imgFilePath = filePath + user.getUserName().toLowerCase() + File.separator + newFileName;
 
         Files.copy(file.getInputStream(), Paths.get(imgFilePath), StandardCopyOption.REPLACE_EXISTING);
+        String profileImgUrl =  baseUrl + user.getUserName().toLowerCase() + "/" + newFileName;
+        user.setProfileImgUrl(profileImgUrl);
+        userRepository.save(user);
 
-        return newFileName;
+        return profileImgUrl;
     }
 
     @Override
-    public void deleteProfilePicture(String path, String userName) throws IOException {
-        Path dirPath = Paths.get((path + File.separator + userName.toLowerCase()));
+    public void deleteProfilePicture(String path, Long userId) throws IOException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Path dirPath = Paths.get((path + File.separator + user.getUserName().toLowerCase()));
         List<File> files = new ArrayList<>();
         File directory = new File(dirPath.toString());
 
@@ -89,6 +112,9 @@ public class FileServiceImpl implements FileService {
         }
 
         Files.delete(dirPath);
+
+        user.setProfileImgUrl(baseUrl + "newuser/" + "user.png");
+        userRepository.save(user);
     }
 
     @Override

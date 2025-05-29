@@ -1,4 +1,4 @@
-package com.robel.bookstore.controller;
+package com.robel.bookstore.controller.publicRoutes;
 
 import com.robel.bookstore.dto.LoginRequestDTO;
 import com.robel.bookstore.dto.UserCreateDTO;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/auth/")
+@RequestMapping("/api/v1/public/auth/")
 public class AuthController {
 
     @Autowired

@@ -8,15 +8,15 @@ import lombok.Setter;
 @Getter
 public class ChangePasswordDTO {
 
-    @NotBlank
-    @Size(min = 8, max = 50)
+    @NotBlank(message = "Old password cannot be blank")
+    @Size(min = 6, max = 50, message = "Old password is not correct")
     private String oldPassword;
 
-    @NotBlank
-    @Size(min = 8, max = 50)
+    @NotBlank(message = "New password cannot be blank")
+    @Size(min = 6, max = 50, message = "New password must be between 6 and 50 characters")
     private String newPassword;
 
-    @NotBlank
-    @Size(min = 8, max = 50)
+    @NotBlank(message = "Confirm password cannot be blank")
+    @Size(min = 6, max = 50, message = "Confirm password must be between 6 and 50 characters")
     private String confirmPassword;
 }

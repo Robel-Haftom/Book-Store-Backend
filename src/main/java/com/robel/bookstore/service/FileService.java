@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface FileService {
 
-    String uploadProfileImage(MultipartFile file, String filePath, String userName) throws IOException;
-    String changeProfileImage(MultipartFile file, String filePath, String userName) throws IOException;
+    String uploadProfileImage(MultipartFile file, String filePath, Long userId) throws IOException;
+    String changeProfileImage(MultipartFile file, String filePath, Long userId) throws IOException;
 
-    void deleteProfilePicture(String path, String userName) throws IOException;
+    void deleteProfilePicture(String path, Long userID) throws IOException;
 
     List<String> uploadBookImage(List<MultipartFile> allImg, String filePath, String uniqueName) throws IOException;
 

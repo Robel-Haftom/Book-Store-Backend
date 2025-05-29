@@ -1,4 +1,4 @@
-package com.robel.bookstore.controller;
+package com.robel.bookstore.controller.superAdmin;
 
 import com.robel.bookstore.dto.UserCreateDTO;
 import com.robel.bookstore.dto.UserResponseDTO;

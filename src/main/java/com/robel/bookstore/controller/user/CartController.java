@@ -1,4 +1,4 @@
-package com.robel.bookstore.controller;
+package com.robel.bookstore.controller.user;
 
 import com.robel.bookstore.dto.CartResponseDTO;
 import com.robel.bookstore.service.CartServices;
@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/carts")
+@RequestMapping("/api/v1/users/carts")
 public class CartController {
     @Autowired
     private CartServices cartServices;

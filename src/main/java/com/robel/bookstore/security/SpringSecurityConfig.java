@@ -37,11 +37,11 @@ public class SpringSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
                         request
-                                .requestMatchers(HttpMethod.GET,
-                                        "/api/v1/books/**",
-                                        "/api/v1/categories/**",
-                                        "/images/**").permitAll()
-                                .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/api/v1/public/**").permitAll()
+                                .requestMatchers("/api/v1/common/**").authenticated()
+                                .requestMatchers("/api/v1/users/**").hasRole("USER")
+                                .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                                .requestMatchers("/api/v1/super-admin/**").hasRole("SUPER_ADMIN")
                                 .anyRequest().authenticated())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

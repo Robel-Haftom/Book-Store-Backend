@@ -1,4 +1,4 @@
-package com.robel.bookstore.controller;
+package com.robel.bookstore.controller.admin;
 
 import com.robel.bookstore.dto.BookCreateDTO;
 import com.robel.bookstore.dto.BookResponseDTO;
@@ -14,37 +14,28 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/books")
-public class BookController {
+@RequestMapping("/api/v1/admin/books")
+public class AdminBookController {
 
     @Autowired
     private BookServices bookServices;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @PostMapping()
     public ResponseEntity<BookResponseDTO> addBook(@Valid @RequestPart("book") BookCreateDTO bookCreateDTO,
                                                    @RequestPart("file") List<MultipartFile> allImg) throws IOException {
         return ResponseEntity.ok().body(bookServices.addBook(bookCreateDTO, allImg));
     }
 
-    @GetMapping("/{bookId}")
-    public ResponseEntity<BookResponseDTO> getBookById(@PathVariable Long bookId) {
-        return ResponseEntity.ok().body(bookServices.getBookById(bookId));
-    }
 
-    @GetMapping()
-    public ResponseEntity<List<BookResponseDTO>> getAllBooks() {
-        return ResponseEntity.ok().body(bookServices.getAllBooks());
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @PutMapping("/{bookId}")
     public ResponseEntity<BookResponseDTO> updateBook(@PathVariable Long bookId,
                                                       @Valid @RequestBody BookCreateDTO bookCreateDTO) {
         return ResponseEntity.ok().body(bookServices.updateBook(bookId, bookCreateDTO));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @DeleteMapping("/{bookId}")
     public ResponseEntity<String> deleteBook(@PathVariable int bookId) throws IOException {
         bookServices.deleteBook(bookId);
