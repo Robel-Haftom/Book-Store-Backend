@@ -4,6 +4,8 @@ import com.robel.bookstore.dto.ReviewCreateDTO;
 import com.robel.bookstore.dto.ReviewResponseDTO;
 import com.robel.bookstore.entity.Review;
 
+import java.time.format.DateTimeFormatter;
+
 public class ReviewMapper {
 
     public static Review mapToReview(ReviewCreateDTO reviewCreateDTO){
@@ -16,11 +18,11 @@ public class ReviewMapper {
     public static ReviewResponseDTO mapToReviewResponseDTO(Review review){
         return new ReviewResponseDTO(
                 review.getReviewId(),
-                review.getRating(),
+                review.getRating().toString(),
                 review.getComment(),
                 review.getUser().getUserName(),
                 review.getBook().getBookTitle(),
-                review.getCreatedAt().toString()
+                review.getCreatedAt().format(DateTimeFormatter.ofPattern("MMM/dd/yyyy hh-mm-ss"))
         );
     }
 }

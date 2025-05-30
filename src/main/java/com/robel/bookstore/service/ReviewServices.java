@@ -11,6 +11,7 @@ public interface ReviewServices {
     ReviewResponseDTO createReview(ReviewCreateDTO reviewCreateDTO);
     ReviewResponseDTO getReviewById(Long reviewId);
     List<ReviewResponseDTO> getAllReviewsByBookId(Long bookId);
+    List<ReviewResponseDTO> getAllReviews();
     ReviewResponseDTO updateReview(Long reviewId, ReviewCreateDTO reviewCreateDTO);
     void deleteReview(Long reviewId);
 }

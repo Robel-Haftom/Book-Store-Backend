@@ -65,6 +65,14 @@ public class ReviewServicesImpl implements ReviewServices {
     }
 
     @Override
+    public List<ReviewResponseDTO> getAllReviews() {
+        List<Review> reviews = reviewRepository.findAll() ;
+
+        return reviews.stream().map(ReviewMapper::mapToReviewResponseDTO).toList();
+
+    }
+
+    @Override
     public ReviewResponseDTO updateReview(Long reviewId, ReviewCreateDTO reviewCreateDTO) {
         Review existingReview = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new ReviewNotFoundException("No review found with this id: " + reviewId));
