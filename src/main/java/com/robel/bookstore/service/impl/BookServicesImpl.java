@@ -39,7 +39,7 @@ public class BookServicesImpl implements BookServices {
     @Value("${images.book.image}")
     String path;
 
-    @Value("${base.url.books}")
+    @Value("${base.url}")
     String baseUrl;
     @Override
     public BookResponseDTO addBook(BookCreateDTO bookCreateDTO, List<MultipartFile> allImg) throws IOException {

@@ -1,13 +1,9 @@
-package com.robel.bookstore.controller.user;
+package com.robel.bookstore.controller.common;
 
-import com.robel.bookstore.dto.ReviewCreateDTO;
 import com.robel.bookstore.dto.ReviewResponseDTO;
 import com.robel.bookstore.service.ReviewServices;
-import com.robel.bookstore.validation.OnCreate;
-import com.robel.bookstore.validation.OnUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

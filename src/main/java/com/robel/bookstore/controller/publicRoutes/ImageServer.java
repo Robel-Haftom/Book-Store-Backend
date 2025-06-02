@@ -13,15 +13,15 @@ import java.io.InputStream;
 
 @RestController
 @RequestMapping("/api/v1/public/images")
-public class BookImageServer {
+public class ImageServer {
     @Autowired
     private FileService fileService;
+
     @Value("${images.book.image}")
     String bookPath;
 
-    @Value("${base.url.books}")
-    String baseUrl;
-
+    @Value("${images.user.profile}")
+    String profilePath;
 
 
     @GetMapping("/books/{uniqueName}/{fileName}")
@@ -42,4 +42,23 @@ public class BookImageServer {
         StreamUtils.copy(image, response.getOutputStream());
 
     }
+
+    @GetMapping("/{userName}/{fileName}")
+    public void serveProfileImg(@PathVariable("userName") String userName,
+                                @PathVariable("fileName") String fileName,
+                                HttpServletResponse response) throws IOException {
+
+        InputStream image = fileService.getProfileImage(profilePath, userName, fileName);
+
+        String extension = fileName.substring(fileName.lastIndexOf("."));
+        switch (extension){
+            case ".png" -> response.setContentType(MediaType.IMAGE_PNG_VALUE);
+            case ".jpeg", ".jpg" -> response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+            case ".gif" -> response.setContentType(MediaType.IMAGE_GIF_VALUE);
+        }
+
+        StreamUtils.copy(image, response.getOutputStream());
+
+    }
+
 }

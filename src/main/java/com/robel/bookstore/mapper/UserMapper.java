@@ -1,5 +1,6 @@
 package com.robel.bookstore.mapper;
 
+import com.robel.bookstore.dto.LoginResponseDTO;
 import com.robel.bookstore.dto.UserCreateDTO;
 import com.robel.bookstore.dto.UserResponseDTO;
 import com.robel.bookstore.entity.User;
@@ -53,6 +54,13 @@ public class UserMapper {
                 user.getLikes().stream().map(LikeMapper::mapToLikeResponseDTO).toList(),
                 user.getBookmarks().stream().map(BookmarkMapper::mapToBookmarkResponseDTO).toList(),
                 user.getOrders().stream().map(OrderMapper::mapToOrderResponseDTO).toList()
+        );
+    }
+
+    public static LoginResponseDTO mapTOLoginResponseDTO(UserResponseDTO userResponseDTO, String accessToken){
+        return new LoginResponseDTO(
+                userResponseDTO,
+                accessToken
         );
     }
 

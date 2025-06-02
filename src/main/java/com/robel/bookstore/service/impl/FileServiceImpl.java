@@ -24,7 +24,7 @@ public class FileServiceImpl implements FileService {
     @Autowired
     private UserRepository userRepository;
 
-    @Value("${base.url.users}")
+    @Value("${base.url}")
     String baseUrl;
 
     @Override

@@ -51,7 +51,7 @@ public class UserServicesImpl implements UserServices {
     @Autowired
     private CustomUserDetailService customUserDetailService;
 
-    @Value("${base.url.users}")
+    @Value("${base.url}")
     String profileBaseUrl;
 
     @Override
@@ -251,10 +251,9 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public String login(LoginRequestDTO userLoginDTO) {
-        userRepository.findByEmail(userLoginDTO.getEmail())
+    public LoginResponseDTO login(LoginRequestDTO userLoginDTO) {
+        User user = userRepository.findByEmail(userLoginDTO.getEmail())
                 .orElseThrow(() -> new UserNotFoundException("No user found with this email id: " + userLoginDTO.getEmail()));
-
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -264,7 +263,9 @@ public class UserServicesImpl implements UserServices {
             );
 
              UserDetails userDetails = customUserDetailService.loadUserByUsername(userLoginDTO.getEmail());
-            return jwtUtilityService.generateToken(userDetails);
+             String accessToken = jwtUtilityService.generateToken(userDetails);
+
+            return UserMapper.mapTOLoginResponseDTO(UserMapper.mapToUserResponseDTO(user), accessToken);
         } catch (UserNotFoundException exception){
             throw exception;
         } catch (AuthenticationException exception){

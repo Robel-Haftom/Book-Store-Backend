@@ -18,7 +18,7 @@ public interface UserServices {
 
     void deleteUser(Long useId);
 
-    String login(LoginRequestDTO userLoginDTO);
+    LoginResponseDTO login(LoginRequestDTO userLoginDTO);
 
     void logout();
 

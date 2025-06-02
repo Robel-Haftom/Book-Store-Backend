@@ -1,6 +1,7 @@
 package com.robel.bookstore.controller.publicRoutes;
 
 import com.robel.bookstore.dto.LoginRequestDTO;
+import com.robel.bookstore.dto.LoginResponseDTO;
 import com.robel.bookstore.dto.UserCreateDTO;
 import com.robel.bookstore.dto.UserResponseDTO;
 import com.robel.bookstore.service.UserServices;
@@ -28,10 +29,8 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<Map<String, String>> login(@Validated(OnCreate.class) @RequestBody LoginRequestDTO userLoginDTO){
-        return ResponseEntity.ok().body(
-                Map.of("accessToken", userServices.login(userLoginDTO))
-        );
+    public ResponseEntity<LoginResponseDTO> login(@Validated(OnCreate.class) @RequestBody LoginRequestDTO userLoginDTO){
+        return ResponseEntity.ok().body(userServices.login(userLoginDTO));
     }
 
     @PostMapping("logout")

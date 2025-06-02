@@ -75,23 +75,6 @@ public class UserController {
     return ResponseEntity.ok().body("deleted successfully");
     }
 
-    @GetMapping("/images/{userName}/{fileName}")
-    public void serveProfileImg(@PathVariable("userName") String userName,
-                                @PathVariable("fileName") String fileName,
-                                HttpServletResponse response) throws IOException {
-
-        InputStream image = fileService.getProfileImage(profilePath, userName, fileName);
-
-        String extension = fileName.substring(fileName.lastIndexOf("."));
-        switch (extension){
-            case ".png" -> response.setContentType(MediaType.IMAGE_PNG_VALUE);
-            case ".jpeg", ".jpg" -> response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-            case ".gif" -> response.setContentType(MediaType.IMAGE_GIF_VALUE);
-        }
-
-        StreamUtils.copy(image, response.getOutputStream());
-
-    }
 
 
 
